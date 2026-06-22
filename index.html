@@ -1,120 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Isaiah Music Reviews</title>
+<title>Isaiah App</title>
+
+<link rel="manifest" href="manifest.json">
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: #0f0f0f;
+  background: #111;
   color: white;
   text-align: center;
 }
 
 header {
   background: #d60000;
-  padding: 18px;
+  padding: 20px;
   font-size: 24px;
   font-weight: bold;
 }
 
-.container {
-  padding: 20px;
-}
-
-input, button {
-  width: 90%;
-  max-width: 400px;
-  padding: 12px;
-  margin: 8px;
-  border-radius: 6px;
-  border: none;
-}
-
 button {
-  background: #d60000;
-  color: white;
+  padding: 12px 20px;
+  margin-top: 20px;
+  background: white;
+  border: none;
   font-weight: bold;
-  cursor: pointer;
-}
-
-.song {
-  background: #1f1f1f;
-  margin: 10px auto;
-  padding: 10px;
-  max-width: 500px;
   border-radius: 8px;
-  text-align: left;
 }
 </style>
 </head>
 
 <body>
 
-<header>Isaiah Music Reviews</header>
+<header>Isaiah App</header>
 
-<div class="container">
+<h2>Welcome to my free app</h2>
 
-<h3>Submit Your Song</h3>
-
-<input id="name" placeholder="Your Name">
-<input type="file" id="file">
-
-<button onclick="uploadSong()">Upload Song</button>
-
-<h3>Submissions</h3>
-<div id="list"></div>
-
-</div>
+<button onclick="alert('App works!')">Test Button</button>
 
 <script>
-let songs = JSON.parse(localStorage.getItem("songs")) || [];
-
-function uploadSong() {
-  const name = document.getElementById("name").value;
-  const file = document.getElementById("file").files[0];
-
-  if (!file) {
-    alert("Pick a file first");
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-    const songData = {
-      name: name || "Unknown",
-      audio: e.target.result
-    };
-
-    songs.push(songData);
-    localStorage.setItem("songs", JSON.stringify(songs));
-
-    loadSongs();
-    alert("Uploaded!");
-  };
-
-  reader.readAsDataURL(file);
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
 }
-
-function loadSongs() {
-  const list = document.getElementById("list");
-  list.innerHTML = "";
-
-  songs.forEach(song => {
-    list.innerHTML += `
-      <div class="song">
-        <p><b>${song.name}</b></p>
-        <audio controls src="${song.audio}"></audio>
-      </div>
-    `;
-  });
-}
-
-loadSongs();
 </script>
 
 </body>
